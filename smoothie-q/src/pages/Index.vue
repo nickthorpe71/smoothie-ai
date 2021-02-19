@@ -22,12 +22,27 @@
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="all">
               <div class="text-h6">All</div>
-              <q-input
-                v-model="searchQuery"
-                label="Label (stacked)"
-                stack-label
-                :dense="dense"
-              ></q-input>
+              <form @submit.prevent="simulateSubmit" class="q-pa-md">
+                <q-input
+                  filled
+                  color="secondary"
+                  hint="Type an ingredient"
+                  v-model="test"
+                ></q-input>
+                <div class="row justify-end">
+                  <q-btn
+                    type="submit"
+                    :loading="submitting"
+                    label="Save"
+                    class="q-mt-md"
+                    color="secondary"
+                  >
+                    <template v-slot:loading>
+                      <q-spinner-facebook></q-spinner-facebook>
+                    </template>
+                  </q-btn>
+                </div>
+              </form>
             </q-tab-panel>
 
             <q-tab-panel name="only">
@@ -38,11 +53,102 @@
                 stack-label
                 :dense="dense"
               ></q-input>
+              <div class="q-pa-md" style="max-width: 350px">
+                <q-list>
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>Single line item</q-item-label>
+                      <q-item-label caption lines="2"
+                        >Secondary line text. Lorem ipsum dolor sit amet,
+                        consectetur adipiscit elit.</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side top>
+                      <q-item-label caption>5 min ago</q-item-label>
+                      <q-icon name="star" color="yellow"></q-icon>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced inset></q-separator>
+
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>Single line item</q-item-label>
+                      <q-item-label caption
+                        >Secondary line text. Lorem ipsum dolor sit amet,
+                        consectetur adipiscit elit.</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side top>
+                      <q-item-label caption>Voted!</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced inset></q-separator>
+
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>Single line item</q-item-label>
+                      <q-item-label caption
+                        >Secondary line text. Lorem ipsum dolor sit amet,
+                        consectetur adipiscit elit.</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side top>
+                      <q-badge color="teal" label="10k"></q-badge>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced inset></q-separator>
+
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>Single line item</q-item-label>
+                      <q-item-label caption
+                        >Secondary line text. Lorem ipsum dolor sit amet,
+                        consectetur adipiscit elit.</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side top>
+                      <q-item-label caption>2 min ago</q-item-label>
+                      <div class="text-orange">
+                        <q-icon name="star"></q-icon>
+                        <q-icon name="star"></q-icon>
+                        <q-icon name="star"></q-icon>
+                      </div>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator spaced inset></q-separator>
+
+                  <q-item>
+                    <q-item-section>
+                      <q-item-label>Single line item</q-item-label>
+                      <q-item-label caption
+                        >Secondary line text. Lorem ipsum dolor sit amet,
+                        consectetur adipiscit elit.</q-item-label
+                      >
+                    </q-item-section>
+
+                    <q-item-section side top>
+                      <q-item-label caption>meta</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </div>
             </q-tab-panel>
 
             <q-tab-panel name="random">
               <div class="text-h6">Random</div>
-              <q-btn color="primary" label="New Smoothie"></q-btn>
+              <q-btn
+                label="New Smoothie"
+                class="q-mt-md"
+                color="secondary"
+              ></q-btn>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
