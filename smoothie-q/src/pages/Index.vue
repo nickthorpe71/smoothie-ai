@@ -22,23 +22,33 @@
           <q-tab-panels v-model="tab" animated>
             <q-tab-panel name="all">
               <div class="text-h6">All</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-input
+                v-model="searchQuery"
+                label="Label (stacked)"
+                stack-label
+                :dense="dense"
+              ></q-input>
             </q-tab-panel>
 
             <q-tab-panel name="only">
               <div class="text-h6">Only</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-input
+                v-model="searchQuery"
+                label="Label (stacked)"
+                stack-label
+                :dense="dense"
+              ></q-input>
             </q-tab-panel>
 
             <q-tab-panel name="random">
               <div class="text-h6">Random</div>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-btn color="primary" label="New Smoothie"></q-btn>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
         <q-card class="q-pa-md">
           <q-infinite-scroll @load="onLoad" :offset="250">
-            <div v-for="(item, index) in items" :key="index" class="caption">
+            <div v-for="(item, index) in recipes" :key="index" class="caption">
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
                 repellendus sit voluptate voluptas eveniet porro. Rerum
@@ -64,14 +74,15 @@ export default {
   data() {
     return {
       tab: "all",
-      items: [{}, {}, {}, {}, {}, {}, {}],
+      recipes: [{}, {}, {}, {}, {}, {}, {}],
+      searchQuery: "",
     };
   },
   methods: {
     onLoad(index, done) {
       setTimeout(() => {
-        if (this.items) {
-          this.items.push({}, {}, {}, {}, {}, {}, {});
+        if (this.recipes) {
+          this.recipes.push({}, {}, {}, {}, {}, {}, {});
           done();
         }
       }, 2000);
