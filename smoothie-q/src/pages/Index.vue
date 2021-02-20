@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div class="q-pa-md">
-      <div class="q-gutter-y-md" style="max-width: 700px">
+      <div class="q-gutter-y-md" style="min-width: 500px; max-width: 800px">
         <q-card>
           <q-tabs
             v-model="tab"
@@ -51,7 +51,6 @@
                 v-model="searchQuery"
                 label="Label (stacked)"
                 stack-label
-                :dense="dense"
               ></q-input>
               <div class="q-pa-md" style="max-width: 350px">
                 <q-list>
@@ -148,19 +147,19 @@
                 label="New Smoothie"
                 class="q-mt-md"
                 color="secondary"
+                @click="randomRecipe()"
               ></q-btn>
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
         <q-card class="q-pa-md">
           <q-infinite-scroll @load="onLoad" :offset="250">
-            <div v-for="(item, index) in recipes" :key="index" class="caption">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-                repellendus sit voluptate voluptas eveniet porro. Rerum
-                blanditiis perferendis totam, ea at omnis vel numquam
-                exercitationem aut, natus minima, porro labore.
-              </p>
+            <div
+              v-for="(recipe, index) in recipes"
+              :key="index"
+              class="caption"
+            >
+              {{ recipe }}
             </div>
             <template v-slot:loading>
               <div class="row justify-center q-my-md">
@@ -175,23 +174,50 @@
 </template>
 
 <script>
+import recipeData from "../../data/recipes.json";
+
 export default {
   name: "PageIndex",
+  created() {
+    this.allRecipes = recipeData;
+  },
   data() {
     return {
       tab: "all",
-      recipes: [{}, {}, {}, {}, {}, {}, {}],
+      allRecipes: [],
+      recipes: [],
       searchQuery: "",
+      test: undefined, // this has something to do with search
+      submitting: false,
     };
   },
   methods: {
     onLoad(index, done) {
       setTimeout(() => {
-        if (this.recipes) {
-          this.recipes.push({}, {}, {}, {}, {}, {}, {});
-          done();
-        }
+        // make this work in chunks for recipe loading
+        // if (this.recipes) {
+        //   this.recipes.push({}, {}, {}, {}, {}, {}, {});
+        //   done();
+        // }
       }, 2000);
+    },
+    randomRecipe() {
+      const min = 0;
+      const max = Math.floor(this.allRecipes.length);
+      const choice = Math.floor(Math.random() * (max - min) + min);
+
+      this.recipes = this.allRecipes[choice];
+    },
+    searchRecipes() {
+      let results = [];
+      let searchField = "name";
+      let searchVal = "my Name";
+      for (var i = 0; i < obj.list.length; i++) {
+        if (obj.list[i][searchField] == searchVal) {
+          results.push(obj.list[i]);
+        }
+      }
+      this.recipes = results;
     },
   },
 };
