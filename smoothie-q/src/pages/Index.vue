@@ -159,7 +159,19 @@
               :key="index"
               class="caption"
             >
-              {{ recipe }}
+              <div>
+                <!-- This h5 will be the title -->
+                <h5>{{ recipe }}</h5>
+                <!-- <ul>
+                  <li
+                    v-for="ingredient in recipe.ingredients"
+                    :key="ingredient"
+                  >
+                    {{ ingredient }}
+                  </li>
+                </ul>
+                <p>{{ recipe.title }}</p> -->
+              </div>
             </div>
             <template v-slot:loading>
               <div class="row justify-center q-my-md">
@@ -180,12 +192,15 @@ export default {
   name: "PageIndex",
   created() {
     this.allRecipes = recipeData;
+    this.getIngredients();
+    console.log(this.ingredients);
   },
   data() {
     return {
       tab: "all",
       allRecipes: [],
       recipes: [],
+      ingredients: undefined,
       searchQuery: "",
       test: undefined, // this has something to do with search
       submitting: false,
@@ -218,6 +233,21 @@ export default {
         }
       }
       this.recipes = results;
+    },
+    getIngredients() {
+      let ingredientSet = new Set();
+
+      // need to parse out out words that aren't ingredients
+      // parse:
+      // all numbers
+      // all measurement types
+      // punctuation
+      // cut, frozen,
+      this.allRecipes.forEach((recipe) => {
+        ingredientSet.add(...recipe.ingredients);
+      });
+
+      this.ingredients = ingredientSet;
     },
   },
 };
