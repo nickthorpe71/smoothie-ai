@@ -162,7 +162,7 @@
               <div>
                 <!-- This h5 will be the title -->
                 <h5>{{ recipe }}</h5>
-                <!-- <ul>
+                <ul>
                   <li
                     v-for="ingredient in recipe.ingredients"
                     :key="ingredient"
@@ -170,7 +170,7 @@
                     {{ ingredient }}
                   </li>
                 </ul>
-                <p>{{ recipe.title }}</p> -->
+                <p>{{ recipe.title }}</p>
               </div>
             </div>
             <template v-slot:loading>
@@ -187,20 +187,21 @@
 
 <script>
 import recipeData from "../../data/recipes.json";
+import washIngredients from "../tools/washIngredients.js";
 
 export default {
   name: "PageIndex",
   created() {
     this.allRecipes = recipeData;
     this.getIngredients();
-    console.log(this.ingredients);
+    console.log(this.allIngredients);
   },
   data() {
     return {
       tab: "all",
       allRecipes: [],
       recipes: [],
-      ingredients: undefined,
+      allIngredients: undefined,
       searchQuery: "",
       test: undefined, // this has something to do with search
       submitting: false,
@@ -237,17 +238,13 @@ export default {
     getIngredients() {
       let ingredientSet = new Set();
 
-      // need to parse out out words that aren't ingredients
-      // parse:
-      // all numbers
-      // all measurement types
-      // punctuation
-      // cut, frozen,
       this.allRecipes.forEach((recipe) => {
-        ingredientSet.add(...recipe.ingredients);
+        recipe.ingredients.forEach((ingredient) => {
+          ingredientSet.add(washIngredients(ingredient));
+        });
       });
 
-      this.ingredients = ingredientSet;
+      this.allIngredients = ingredientSet;
     },
   },
 };
