@@ -13,18 +13,18 @@ const washIngredient = (ingredient) => {
         'decilitre', 'pound', 'milligram', 'gram', 'chopped', 'diced', 'halved', 'pitted',
         'divided', 'broken', 'into', 'chunks', 'hulled', 'in', 'half', 'container', 'such',
         'as', 'uv',
-    ]
+    ];
 
     // add plurals
     measurements.forEach(measurement => {
         measurements.push(measurement + 's');
-    })
+    });
 
     const expStr = measurements.join("|");
-	washedIngredient = washedIngredient.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ')
-                    .replace(/\s{2,}/g, ' ');
+    washedIngredient = washedIngredient.replace(new RegExp('\\b(' + expStr + ')\\b', 'gi'), ' ')
+        .replace(/\s{2,}/g, ' ');
 
     return washedIngredient.trim();
-}
+};
 
 export default washIngredient;
